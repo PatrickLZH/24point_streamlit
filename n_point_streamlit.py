@@ -33,7 +33,6 @@ def join_brace_to_expression(cards, ops):
     exps = []
     for brace in with_braces:
         exp = join_op_with_brace_number(ops, brace)[1:-1]
-        # print(exp,type(exp))
         exps.append(exp)
     return exps
 
@@ -98,9 +97,6 @@ def show_reference(cards_str):
     cards = list(cards_str.split(','))
     solution = answer_n_point(cards)
     return f"参考答案：{solution}"
-
-# cards = ['6','6','6']
-# print(answer_n_point(cards))
 
 # Streamlit UI 配置
 st.markdown("# 计算N点小游戏")
