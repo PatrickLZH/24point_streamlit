@@ -78,6 +78,8 @@ if 'show_check' not in st.session_state:
     st.session_state.show_check = False
 if 'show_ref' not in st.session_state:
     st.session_state.show_ref = False
+if 'user_input' not in st.session_state:
+    st.session_state.user_input = ""
 
 col1, col2 = st.columns([1, 3])
 with col1:
@@ -85,12 +87,14 @@ with col1:
         st.session_state.question = generate_question()
         st.session_state.show_check = True
         st.session_state.show_ref = True
+        st.session_state.user_input = ""
         st.rerun()
 
 with col2:
     question_output = st.text_input("题目区", value=st.session_state.question, disabled=True)
 
-user_input = st.text_input("输入你的算式，例如：(3+3)*(8-4) 或者 无解")
+user_input = st.text_input("输入你的算式，例如：(3+3)*(8-4) 或者 无解", value=st.session_state.user_input)
+st.session_state.user_input = user_input
 
 if st.session_state.show_check and st.button("提交验证"):
     result = check_answer(st.session_state.question, user_input)
