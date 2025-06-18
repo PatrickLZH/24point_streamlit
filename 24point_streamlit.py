@@ -65,7 +65,7 @@ def check_answer(cards_str, user_exp):
 
 # 显示参考答案
 def show_reference(cards_str):
-    cards = list(map(int, cards_str.split(',')))
+    cards = list(cards_str.split(','))
     solution = answer_24_point(cards)
     return f"参考答案：{solution}"
 
