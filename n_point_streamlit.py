@@ -7,7 +7,6 @@ import streamlit as st
 N = st.session_state.n_value if 'n_value' in st.session_state else 4
 MAX = st.session_state.max_value if 'max_value' in st.session_state else 10
 ANSWER = st.session_state.answer_value if 'answer_value' in st.session_state else 24
-print(N, MAX, ANSWER)
 def add_brace(cards):
     if len(cards) < 2: return [cards]
     if len(cards) == 2: 
@@ -34,6 +33,7 @@ def join_brace_to_expression(cards, ops):
     exps = []
     for brace in with_braces:
         exp = join_op_with_brace_number(ops, brace)[1:-1]
+        # print(exp,type(exp))
         exps.append(exp)
     return exps
 
@@ -73,9 +73,10 @@ def generate_question():
 
 # 检查答案
 def check_answer(cards_str, user_exp):
+    print(cards_str,user_exp,type(cards_str),type(user_exp))
     try:
-        cards = sorted(list(map(int, re.findall(r'\b\d+\b', cards_str))))
-        card_user = sorted(list(map(int, re.findall(r'\b\d+\b', user_exp))))
+        cards = sorted(list(re.findall(r'\b\d+\b', cards_str)))
+        card_user = sorted(list(re.findall(r'\b\d+\b', user_exp)))
         if user_exp.strip() == '无解' and answer_n_point(cards) == '无解':
             return "✅ 回答正确！"
         elif user_exp.strip() == '无解' and answer_n_point(cards) != '无解':
@@ -116,6 +117,8 @@ if 'show_check' not in st.session_state:
     st.session_state.show_check = False
 if 'show_ref' not in st.session_state:
     st.session_state.show_ref = False
+if 'user_input' not in st.session_state:
+    st.session_state.user_input = ""
 
 # 添加输入框和确认按钮
 with st.sidebar:
@@ -140,12 +143,15 @@ with col1:
         st.session_state.question = generate_question()
         st.session_state.show_check = True
         st.session_state.show_ref = True
+        st.session_state.user_input = ""
         st.rerun()
 
 with col2:
     question_output = st.text_input("题目区", value=st.session_state.question, disabled=True)
 
-user_input = st.text_input("输入你的算式，例如：(3+3)*(8-4) 或者 无解")
+user_input = st.text_input("输入你的算式，例如：(3+3)*(8-4) 或者 无解", value=st.session_state.user_input)
+st.session_state.user_input = user_input
+
 
 if st.session_state.show_check and st.button("提交验证"):
     result = check_answer(st.session_state.question, user_input)
