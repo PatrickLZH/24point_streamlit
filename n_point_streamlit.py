@@ -119,7 +119,7 @@ if 'user_input' not in st.session_state:
 # 添加输入框和确认按钮
 with st.sidebar:
     st.header("参数设置")
-    n_input = st.number_input("请输入卡牌数量", min_value=2, value=st.session_state.n_value)
+    n_input = st.number_input("请输入卡牌数量", min_value=3, max_value=5, value=st.session_state.n_value)
     max_input = st.number_input("请输入卡牌的最大数值", min_value=1, value=st.session_state.max_value)
     answer_input = st.number_input("请输入目标答案", value=st.session_state.answer_value)
 
