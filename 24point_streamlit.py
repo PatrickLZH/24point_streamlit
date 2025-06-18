@@ -45,8 +45,8 @@ def generate_question():
 # 检查答案
 def check_answer(cards_str, user_exp):
     try:
-        cards = sorted(list(map(int, re.findall(r'\b\d+\b', cards_str))))
-        card_user = sorted(list(map(int, re.findall(r'\b\d+\b', user_exp))))
+        cards = sorted(list(re.findall(r'\b\d+\b', cards_str)))
+        card_user = sorted(list(re.findall(r'\b\d+\b', user_exp)))
         if user_exp.strip() == '无解' and answer_24_point(cards) == '无解':
             return "✅ 回答正确！"
         elif user_exp.strip() == '无解' and answer_24_point(cards) != '无解':
@@ -58,10 +58,10 @@ def check_answer(cards_str, user_exp):
         elif round(eval(user_exp.strip()), 1) == 24 and cards == card_user:
             return "✅ 回答正确！"
     except ZeroDivisionError:
-        return "⚠ 出现除零错误"
+        return "⚠️ 出现除零错误"
     except Exception as e:
         print(f"Error: {str(e)}")
-        return "⚠ 输入表达式格式错误"
+        return "⚠️ 输入表达式格式错误"
 
 # 显示参考答案
 def show_reference(cards_str):
@@ -98,8 +98,8 @@ st.session_state.user_input = user_input
 
 if st.session_state.show_check and st.button("提交验证"):
     result = check_answer(st.session_state.question, user_input)
-    st.text_area("结果反馈", value=result, height=100)
+    st.text_area("结果反馈", value=result, height=100, disabled=True)
 
 if st.session_state.show_ref and st.button("显示参考答案"):
     reference = show_reference(st.session_state.question)
-    st.text_area("参考答案", value=reference, height=100)
+    st.text_area("参考答案", value=reference, height=100, disabled=True)
