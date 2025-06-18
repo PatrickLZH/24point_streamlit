@@ -33,7 +33,7 @@ def join_brace_to_expression(cards, ops):
     with_braces = add_brace(cards)
     exps = []
     for brace in with_braces:
-        exp = join_op_with_brace_number(ops, brace)
+        exp = join_op_with_brace_number(ops, brace)[1:-1]
         exps.append(exp)
     return exps
 
