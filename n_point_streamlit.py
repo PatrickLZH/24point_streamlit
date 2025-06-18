@@ -149,8 +149,8 @@ user_input = st.text_input("输入你的算式，例如：(3+3)*(8-4) 或者 无
 
 if st.session_state.show_check and st.button("提交验证"):
     result = check_answer(st.session_state.question, user_input)
-    st.text_area("结果反馈", value=result, height=50)
+    st.text_area("结果反馈", value=result, height=100)
 
 if st.session_state.show_ref and st.button("显示参考答案"):
     reference = show_reference(st.session_state.question)
-    st.text_area("参考答案", value=reference, height=50)
+    st.text_area("参考答案", value=reference, height=100)
