@@ -102,4 +102,4 @@ if st.session_state.show_check and st.button("提交验证"):
 
 if st.session_state.show_ref and st.button("显示参考答案"):
     reference = show_reference(st.session_state.question)
-    st.text_area("参考答案", value=reference, height=100, disabled=True)
+    st.text_area("", value=reference, height=100, disabled=True)
