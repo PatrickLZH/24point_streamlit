@@ -3,10 +3,6 @@ import random
 import itertools
 import streamlit as st
 
-# 初始化 N 的值
-N = st.session_state.n_value if 'n_value' in st.session_state else 4
-MAX = st.session_state.max_value if 'max_value' in st.session_state else 10
-ANSWER = st.session_state.answer_value if 'answer_value' in st.session_state else 24
 def add_brace(cards):
     if len(cards) < 2: return [cards]
     if len(cards) == 2: 
@@ -87,16 +83,21 @@ def check_answer(cards_str, user_exp):
         elif round(eval(user_exp.strip()), 1) == ANSWER and cards == card_user:
             return "✅ 回答正确！"
     except ZeroDivisionError:
-        return "⚠ 出现除零错误"
+        return "⚠️ 出现除零错误"
     except Exception as e:
         print(f"Error: {str(e)}")
-        return "⚠ 输入表达式格式错误"
+        return "⚠️ 输入表达式格式错误"
 
 # 显示参考答案
 def show_reference(cards_str):
     cards = list(cards_str.split(','))
     solution = answer_n_point(cards)
     return f"参考答案：{solution}"
+
+# 初始化 N 的值
+N = st.session_state.n_value if 'n_value' in st.session_state else 4
+MAX = st.session_state.max_value if 'max_value' in st.session_state else 10
+ANSWER = st.session_state.answer_value if 'answer_value' in st.session_state else 24
 
 # Streamlit UI 配置
 st.markdown("# 计算N点小游戏")
@@ -148,11 +149,10 @@ with col2:
 user_input = st.text_input("输入你的算式，例如：(3+3)*(8-4) 或者 无解", value=st.session_state.user_input)
 st.session_state.user_input = user_input
 
-
 if st.session_state.show_check and st.button("提交验证"):
     result = check_answer(st.session_state.question, user_input)
-    st.text_area("结果反馈", value=result, height=100)
+    st.text_area("结果反馈", value=result, height=100, disabled=True)
 
 if st.session_state.show_ref and st.button("显示参考答案"):
     reference = show_reference(st.session_state.question)
-    st.text_area("参考答案", value=reference, height=100)
+    st.text_area("参考答案", value=reference, height=100, disabled=True)
